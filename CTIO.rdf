@@ -1,0 +1,322 @@
+@prefix ns1: <http://WS_Research.org/CyberSecurity/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:ApplicablePlatform a rdfs:Class .
+
+ns1:AttackPattern a rdfs:Class ;
+    ns1:achieve "" ;
+    ns1:bypass "" ;
+    ns1:description "" ;
+    ns1:detected_in "" ;
+    ns1:execution_Flow "" ;
+    ns1:led_Consequences "" ;
+    ns1:likelihood_Of_Attack "" ;
+    ns1:name "" ;
+    ns1:permissions_Required "" ;
+    ns1:platform ns1:ApplicablePlatform ;
+    ns1:prerequisites "" ;
+    ns1:required_resources ns1:Observable ;
+    ns1:resources_Required "" ;
+    ns1:skills_Required "" ;
+    ns1:targets ns1:Weakness ;
+    ns1:typical_Severity "" .
+
+ns1:Campaign a rdfs:Class ;
+    ns1:description "" ;
+    ns1:targets ns1:ApplicablePlatform .
+
+ns1:CourseOfAction a rdfs:Class ;
+    ns1:description "" ;
+    ns1:effectiveness "" ;
+    ns1:mitigates ns1:AttackPattern,
+        ns1:Weakness ;
+    ns1:mitigation_Phase "" ;
+    ns1:mitigation_Strategy "" ;
+    ns1:name "" .
+
+ns1:CyberAction a rdfs:Class ;
+    ns1:delivers ns1:Malware ;
+    ns1:intervalBefore ns1:CyberAction ;
+    ns1:is_Instance_Of ns1:AttackPattern ;
+    ns1:targets ns1:Vulnerability ;
+    ns1:uses ns1:Tool .
+
+ns1:Indicator a rdfs:Class ;
+    ns1:description "" ;
+    ns1:effectiveness "" ;
+    ns1:indicates ns1:AttackPattern ;
+    ns1:name "" .
+
+ns1:IntrusionSet a rdfs:Class ;
+    ns1:aliases "" ;
+    ns1:attributed_to ns1:Campaign ;
+    ns1:description "" ;
+    ns1:execute ns1:CyberAction ;
+    ns1:name "" ;
+    ns1:uses ns1:AttackPattern,
+        ns1:Malware,
+        ns1:Tool .
+
+ns1:Malware a rdfs:Class ;
+    ns1:aliases "" ;
+    ns1:description "" ;
+    ns1:downloads ns1:Malware,
+        ns1:Tool ;
+    ns1:execute ns1:CyberAction ;
+    ns1:name "" ;
+    ns1:platform ns1:ApplicablePlatform ;
+    ns1:uses ns1:AttackPattern .
+
+ns1:Observable a rdfs:Class .
+
+ns1:Tool a rdfs:Class ;
+    ns1:aliases "" ;
+    ns1:description "" ;
+    ns1:name "" ;
+    ns1:platform ns1:ApplicablePlatform .
+
+ns1:Vulnerability a rdfs:Class ;
+    ns1:attributed_to ns1:ApplicablePlatform ;
+    ns1:derived_from ns1:Weakness ;
+    ns1:description "" ;
+    ns1:led_Consequences "" ;
+    ns1:name "" .
+
+ns1:Weakness a rdfs:Class ;
+    ns1:aliases "" ;
+    ns1:attributed_to ns1:ApplicablePlatform ;
+    ns1:description "" ;
+    ns1:functional_Area "" ;
+    ns1:introduction_phase "" ;
+    ns1:led_Consequences "" ;
+    ns1:likelihood_Of_Exploit "" ;
+    ns1:name "" ;
+    ns1:ordinality "" .
+
+ns1:achieve a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:affected_resources a rdf:predicate ;
+    rdfs:domain ns1:Weakness ;
+    rdfs:range ns1:Observable .
+
+ns1:aliases a rdf:predicate ;
+    rdfs:domain ns1:IntrusionSet,
+        ns1:Malware,
+        ns1:Tool,
+        ns1:Weakness ;
+    rdfs:range xsd:string .
+
+ns1:attack_Phase a rdf:predicate ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ns1:execution_Flow .
+
+ns1:attack_description a rdf:predicate ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ns1:execution_Flow .
+
+ns1:attributed_to a rdf:predicate ;
+    rdfs:domain ns1:Campaign,
+        ns1:Vulnerability,
+        ns1:Weakness ;
+    rdfs:range ns1:ApplicablePlatform,
+        ns1:IntrusionSet .
+
+ns1:bypass a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:can_also_be a rdf:predicate .
+
+ns1:can_follow a rdf:predicate .
+
+ns1:can_precede a rdf:predicate .
+
+ns1:child_of a rdf:predicate .
+
+ns1:delivers a rdf:predicate ;
+    rdfs:domain ns1:CyberAction ;
+    rdfs:range ns1:Malware .
+
+ns1:derived_from a rdf:predicate ;
+    rdfs:domain ns1:Vulnerability ;
+    rdfs:range ns1:Weakness .
+
+ns1:description a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern,
+        ns1:Campaign,
+        ns1:CourseOfAction,
+        ns1:CyberAction,
+        ns1:Indicator,
+        ns1:IntrusionSet,
+        ns1:Malware,
+        ns1:Tool,
+        ns1:Vulnerability,
+        ns1:Weakness ;
+    rdfs:range xsd:string .
+
+ns1:detected_in a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:downloads a rdf:predicate ;
+    rdfs:domain ns1:Malware ;
+    rdfs:range ns1:Malware,
+        ns1:Tool .
+
+ns1:effectiveness a rdf:predicate ;
+    rdfs:domain ns1:CourseOfAction,
+        ns1:Indicator ;
+    rdfs:range xsd:string .
+
+ns1:execute a rdf:predicate ;
+    rdfs:domain ns1:IntrusionSet,
+        ns1:Malware ;
+    rdfs:range ns1:CyberAction .
+
+ns1:functional_Area a rdf:predicate ;
+    rdfs:domain ns1:Weakness ;
+    rdfs:range xsd:string .
+
+ns1:impact a rdf:predicate ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ns1:led_Consequences .
+
+ns1:indicates a rdf:predicate ;
+    rdfs:domain ns1:Indicator ;
+    rdfs:range ns1:AttackPattern,
+        ns1:Weakness .
+
+ns1:installs a rdf:predicate ;
+    rdfs:domain ns1:CyberAction ;
+    rdfs:range ns1:Malware .
+
+ns1:intervalBefore a rdf:predicate ;
+    rdfs:domain ns1:CyberAction ;
+    rdfs:range ns1:CyberAction .
+
+ns1:introduction_phase a rdf:predicate ;
+    rdfs:domain ns1:Weakness ;
+    rdfs:range xsd:string .
+
+ns1:is_Instance_Of a rdf:predicate ;
+    rdfs:domain ns1:CyberAction ;
+    rdfs:range ns1:AttackPattern .
+
+ns1:likelihood a rdf:predicate ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ns1:led_Consequences .
+
+ns1:likelihood_Of_Attack a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:likelihood_Of_Exploit a rdf:predicate ;
+    rdfs:domain ns1:Weakness ;
+    rdfs:range xsd:string .
+
+ns1:mitigates a rdf:predicate ;
+    rdfs:domain ns1:CourseOfAction ;
+    rdfs:range ns1:AttackPattern,
+        ns1:Weakness .
+
+ns1:mitigation_Phase a rdf:predicate ;
+    rdfs:domain ns1:CourseOfAction ;
+    rdfs:range xsd:string .
+
+ns1:mitigation_Strategy a rdf:predicate ;
+    rdfs:domain ns1:CourseOfAction ;
+    rdfs:range xsd:string .
+
+ns1:name a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern,
+        ns1:CourseOfAction,
+        ns1:Indicator,
+        ns1:IntrusionSet,
+        ns1:Malware,
+        ns1:Tool,
+        ns1:Vulnerability,
+        ns1:Weakness ;
+    rdfs:range xsd:string .
+
+ns1:ordinality a rdf:predicate ;
+    rdfs:domain ns1:Weakness ;
+    rdfs:range xsd:string .
+
+ns1:parent_of a rdf:predicate .
+
+ns1:partOf a rdf:predicate .
+
+ns1:peer_of a rdf:predicate .
+
+ns1:permissions_Required a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:platform a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern,
+        ns1:Malware,
+        ns1:Tool ;
+    rdfs:range ns1:ApplicablePlatform .
+
+ns1:prerequisites a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:required_by a rdf:predicate .
+
+ns1:required_resources a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range ns1:Observable .
+
+ns1:requires a rdf:predicate .
+
+ns1:resources_Required a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:scope a rdf:predicate ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ns1:led_Consequences .
+
+ns1:skills_Required a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:starts_with a rdf:predicate .
+
+ns1:step a rdf:predicate ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf ns1:execution_Flow .
+
+ns1:targets a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern,
+        ns1:Campaign,
+        ns1:CyberAction ;
+    rdfs:range ns1:ApplicablePlatform,
+        ns1:Vulnerability,
+        ns1:Weakness .
+
+ns1:typical_Severity a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern ;
+    rdfs:range xsd:string .
+
+ns1:uses a rdf:predicate ;
+    rdfs:domain ns1:IntrusionSet,
+        ns1:Malware ;
+    rdfs:range ns1:AttackPattern,
+        ns1:Malware,
+        ns1:Tool .
+
+ns1:execution_Flow a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern .
+
+ns1:led_Consequences a rdf:predicate ;
+    rdfs:domain ns1:AttackPattern,
+        ns1:Vulnerability,
+        ns1:Weakness .
+
